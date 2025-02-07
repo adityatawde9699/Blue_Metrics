@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Water Quality Monitoring System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: url('https://www.shutterstock.com/image-photo/examination-water-quality-natural-reservoir-260nw-2472354399.jpg') no-repeat center center fixed;
+            background-size: cover;
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+            color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            max-width: 850px;
+            margin: auto;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 35px;
+            border-radius: 15px;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6);
+            animation: float 3s ease-in-out infinite;
+            transition: transform 0.3s ease;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        h1 {
+            font-size: 42px;
+            margin-bottom: 15px;
+            color: #ffcc00;
+            text-shadow: 3px 3px 15px rgba(0, 0, 0, 0.6);
+        }
+        h2 {
+            font-size: 28px;
+            color: #00ffcc;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+        }
+        p {
+            font-size: 20px;
+            line-height: 1.8;
+            opacity: 0.95;
+            font-weight: 300;
+            color: #e0e0e0;
+        }
+        .button {
+            display: inline-block;
+            background: linear-gradient(45deg, #ff9800, #ff5722);
+            color: white;
+            padding: 14px 32px;
+            text-decoration: none;
+            font-size: 22px;
+            font-weight: bold;
+            border-radius: 10px;
+            margin-top: 25px;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 18px rgba(255, 87, 34, 0.5);
+            cursor: pointer;
+            border: none;
+        }
+        .button:hover {
+            background: linear-gradient(45deg, #e68900, #d84315);
+            transform: scale(1.08);
+            box-shadow: 0 10px 25px rgba(255, 87, 34, 0.6);
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="page1">
+            <h1>Welcome to Water Quality Monitoring System</h1>
+            <p>
+                Our <strong>advanced water quality monitoring system</strong> enables real-time tracking of crucial parameters such as <span style="color: #00ffcc;">pH levels</span>,
+                <span style="color: #ffcc00;">turbidity</span>, <span style="color: #ff6666;">TDS</span>, conductivity, and dissolved oxygen to ensure safe and clean water.
+            </p>
+            <button class="button" onclick="showPage('page2')">Next</button>
+        </div>
+        
+        <div id="page2" class="hidden">
+            <h2>Our Journey</h2>
+            <p>
+                During our <strong>Engineering Exploration</strong> course at college, we gained insights into real-world market dynamics
+                and problem-solving methodologies. This course equipped us with the knowledge to tackle practical challenges through technology.
+            </p>
+            <p>
+                As part of our course project, we were given a real-world problem statement: <br>
+                <em style="color: #ffcc00;">A Residential Society relies on a contaminated water source that undergoes only elementary treatment.
+                Concerned about residents’ health, the society needs an automated water quality monitoring system to
+                regularly test for pollutants and acidity levels.</em>
+            </p>
+            <p>
+                To address this challenge, we designed and built an innovative device that automates water quality assessment.
+                Our system continuously monitors water parameters, providing real-time data and alerts for necessary interventions.
+                We are actively refining and enhancing our system to make it even more efficient and user-friendly.
+            </p>
+            <button class="button" onclick="showPage('page1')">Back</button>
+        </div>
+    </div>
+    <script>
+        function showPage(pageId) {
+            document.getElementById('page1').classList.add('hidden');
+            document.getElementById('page2').classList.add('hidden');
+            document.getElementById(pageId).classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
