@@ -1,32 +1,25 @@
-const esp32IP = "192.168.242.1";
+const esp32IP = "http://192.168.242.1"; // Change to your ESP32 IP
 
-    Promise.race([
-        fetch(esp32IP + "/data"),
-        new Promise((_, reject) => setTimeout(() => reject(new Error('Request timed out')), 5000))
-    ])
-    .then(response => response.json())
-    .then(data => {
-        document.getElementById('phValue').innerText = "pH: " + (typeof data.pH === 'number' ? data.pH.toFixed(2) : 'N/A');
-        document.getElementById('turbValue').innerText = "Turbidity: " + (typeof data.turbidity === 'number' ? data.turbidity.toFixed(2) : 'N/A') + " NTU";
-        document.getElementById('phMeter').style.width = (data.pH / 14) * 100 + "%";
-        document.getElementById('turbMeter').style.width = (data.turbidity / 100) * 100 + "%";
+        function updateData() {
+            fetch(esp32IP + "/data")
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('phValue').innerText = "pH: " + data.pH.toFixed(2);
+                document.getElementById('turbValue').innerText = "Turbidity: " + data.turbidity.toFixed(2) + " NTU";
 
-        let reportText = "Water quality is within acceptable limits.";
-        if (data.pH < 6.5 || data.pH > 8.5) {
-            reportText = "⚠️ pH level is outside the safe range!";
+                document.getElementById('phMeter').style.width = (data.pH / 14) * 100 + "%";
+                document.getElementById('turbMeter').style.width = (data.turbidity / 100) * 100 + "%";
+
+                let reportText = "Water quality is within acceptable limits.";
+                if (data.pH < 6.5 || data.pH > 8.5) reportText = "⚠️ pH level is outside the safe range!";
+                if (data.turbidity > 100) reportText = "⚠️ Turbidity is too high, water quality is poor!";
+                document.getElementById('reportText').innerText = reportText;
+            })
+            .catch(error => {
+                console.log("Error fetching data:", error);
+                document.getElementById('reportText').innerText = "🚨 Unable to fetch data!";
+            });
         }
-        if (data.turbidity > 100) {
-            reportText = "⚠️ Turbidity is too high, water quality is poor!";
-        }
-        document.getElementById('reportText').innerText = reportText;
-    })
 
-
-const fetchInterval = 10000; // Default to 10 seconds
-let intervalId = null;
-setInterval(updateData, fetchInterval);
-
-updateData();
-updateData();updateData();
-
-
+        setInterval(updateData, 2000);
+        updateData();
