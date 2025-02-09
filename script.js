@@ -1,4 +1,4 @@
-const esp32IP = "https://1bf1-2409-4081-178c-a2be-1cf6-e93e-421b-a41f.ngrok-free.app/"; // Change to your ESP32 IP
+const esp32IP = "https://1bf1-2409-4081-178c-a2be-1cf6-e93e-421b-a41f.ngrok-free.app"; // Change to your ESP32 IP
 
         function updateData() {
             fetch(esp32IP + "/data")
