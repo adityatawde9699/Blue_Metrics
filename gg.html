@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Water Quality Monitoring</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700|Roboto:400,500,700|Montserrat:400,500,600,700|Roboto+Slab:400,500,600,700">
+</head>
+<body>
+    
+    <h1>Water Quality Monitoring</h1>
+
+    <div class="container">
+        <div class="card"><label class="label" for="phMeter">pH Level</label>
+            <div class="progress-bar"><div class="progress-fill ph-fill" id="phMeter"></div></div>
+            <div id="phValue">pH: 7.00</div>
+        </div>
+        <div class="card"><label class="label" for="turbMeter">Turbidity (NTU)</label>
+            <div class="progress-bar"><div class="progress-fill turbidity-fill" id="turbMeter"></div></div>
+            <div id="turbValue">Turbidity: 0.00 NTU</div>
+        </div>
+        
+        <div class="card"><label class="label" for="TDS">TDS(ppm)</label>
+            <div class="progress-bar"><div class="progress-fill TDS-fill" id="TDS"></div></div>
+            <div id="tdsValue">TDS: 0.00 ppm</div>
+        </div>
+        
+        <div class="card"><label class="label" for="conductivityMeter">Conductivity (μS/cm)</label>
+            <div class="progress-bar"><div class="progress-fill conductivity-fill" id="conductivityMeter"></div></div>
+            <div id="conductivityValue">Conductivity: 0 μS/cm</div>
+        </div>
+        
+        <div class="card"><label class="label" for="doMeter">Dissolved Oxygen (mg/L)</label>
+            <div class="progress-bar"><div class="progress-fill do-fill" id="doMeter"></div></div>
+            <div id="doValue">DO: 0 mg/L</div>
+        </div>
+
+        <div class="card report"><h3>Water Quality Report</h3><p id="reportText">Loading...</p></div>
+    </div>
+
+    <section class="info">
+        <h2>Why Monitor Water Quality?</h2>
+        <p>Monitoring water quality is essential to ensure the safety and health of ecosystems and human populations. It helps in detecting pollutants, managing water resources, and ensuring compliance with environmental regulations.</p>
+        
+        <h2>Parameters We Measure</h2>
+        <ul>
+            <li><strong>pH Level:</strong> Indicates the acidity or alkalinity of water, which is crucial for aquatic life.</li>
+            <li><strong>Turbidity:</strong> Measures the clarity of water, affecting light penetration and aquatic plants.</li>
+            <li><strong>Total Dissolved Solids (TDS):</strong> Indicates the concentration of dissolved substances in water, impacting water quality.</li>
+            <li><strong>Conductivity:</strong> Measures the water's ability to conduct electricity, correlating with the concentration of ions and overall water purity.</li>
+            <li><strong>Dissolved Oxygen (DO):</strong> Indicates the amount of oxygen available in water for aquatic life, essential for their survival.</li>
+        </ul>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Water Monitoring | <a href="#">Privacy Policy</a></p>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>
