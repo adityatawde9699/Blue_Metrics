@@ -2,61 +2,254 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Water Quality Monitoring</title>
+    <title>Water Quality Monitoring Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700">
+    <meta name="description" content="Real-time water quality monitoring dashboard showing pH, turbidity, TDS, conductivity, and dissolved oxygen levels">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700|Roboto:400,500,700|Montserrat:400,500,600,700">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700|Roboto:400,500,700|Montserrat:400,500,600,700|Roboto+Slab:400,500,600,700">
 </head>
 <body>
-    
-    <h1>Water Quality Monitoring</h1>
-
-    <div class="container">
-        <div class="card"><label class="label" for="phMeter">pH Level</label>
-            <div class="progress-bar"><div class="progress-fill ph-fill" id="phMeter"></div></div>
-            <div id="phValue">pH: 7.00</div>
+    <nav class="navbar">
+        <div class="logo">
+            <i class="fas fa-water"></i>
+            <span>WaterQual</span>
         </div>
-        <div class="card"><label class="label" for="turbMeter">Turbidity (NTU)</label>
-            <div class="progress-bar"><div class="progress-fill turbidity-fill" id="turbMeter"></div></div>
-            <div id="turbValue">Turbidity: 0.00 NTU</div>
+        <div class="hamburger">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
         </div>
-        
-        <div class="card"><label class="label" for="TDS">TDS(ppm)</label>
-            <div class="progress-bar"><div class="progress-fill TDS-fill" id="TDS"></div></div>
-            <div id="tdsValue">TDS: 0.00 ppm</div>
-        </div>
-        
-        <div class="card"><label class="label" for="conductivityMeter">Conductivity (μS/cm)</label>
-            <div class="progress-bar"><div class="progress-fill conductivity-fill" id="conductivityMeter"></div></div>
-            <div id="conductivityValue">Conductivity: 0 μS/cm</div>
-        </div>
-        
-        <div class="card"><label class="label" for="doMeter">Dissolved Oxygen (mg/L)</label>
-            <div class="progress-bar"><div class="progress-fill do-fill" id="doMeter"></div></div>
-            <div id="doValue">DO: 0 mg/L</div>
-        </div>
-
-        <div class="card report"><h3>Water Quality Report</h3><p id="reportText">Loading...</p></div>
-    </div>
-
-    <section class="info">
-        <h2>Why Monitor Water Quality?</h2>
-        <p>Monitoring water quality is essential to ensure the safety and health of ecosystems and human populations. It helps in detecting pollutants, managing water resources, and ensuring compliance with environmental regulations.</p>
-        
-        <h2>Parameters We Measure</h2>
-        <ul>
-            <li><strong>pH Level:</strong> Indicates the acidity or alkalinity of water, which is crucial for aquatic life.</li>
-            <li><strong>Turbidity:</strong> Measures the clarity of water, affecting light penetration and aquatic plants.</li>
-            <li><strong>Total Dissolved Solids (TDS):</strong> Indicates the concentration of dissolved substances in water, impacting water quality.</li>
-            <li><strong>Conductivity:</strong> Measures the water's ability to conduct electricity, correlating with the concentration of ions and overall water purity.</li>
-            <li><strong>Dissolved Oxygen (DO):</strong> Indicates the amount of oxygen available in water for aquatic life, essential for their survival.</li>
+        <ul class="nav-links">
+            <li><a href="#info" class="nav-link"><i class="fas fa-info-circle"></i> Information</a></li>
+            <li><a href="#history" class="nav-link"><i class="fas fa-chart-line"></i> History</a></li>
+            <li class="dropdown">
+                <a href="#" class="nav-link"><i class="fas fa-cog"></i> Settings <i class="fas fa-chevron-down"></i></a>
+                <ul class="dropdown-content">
+                    <li><a href="#profile">Profile</a></li>
+                    <li><a href="#preferences">Preferences</a></li>
+                </ul>
+            </li>
         </ul>
-    </section>
+    </nav>
 
+    <main>
+        <section id="dashboard" class="dashboard">
+            <h1>Real-Time Water Quality Dashboard</h1>
+            <div class="last-updated">Last Updated: <span id="updateTime">Loading...</span></div>
+
+            <div id="connectionStatus"></div>
+            <div id="lastUpdate"></div>
+
+            <div class="container">
+                <div class="card" data-tooltip="Ideal pH range: 6.5-8.5">
+                    <label class="label" for="phMeter">pH Level</label>
+                    <div class="progress-bar"><div class="progress-fill ph-fill" id="phMeter"></div></div>
+                    <div id="phValue">pH: 7.00</div>
+                    <div class="status-indicator" id="phStatus"></div>
+                </div>
+
+                <div class="card" data-tooltip="Ideal turbidity: < 5 NTU">
+                    <label class="label" for="turbidityMeter">Turbidity</label>
+                    <div class="progress-bar"><div class="progress-fill turbidity-fill" id="turbidityMeter"></div></div>
+                    <div id="turbidityValue">Turbidity: 2.5 NTU</div>
+                    <div class="status-indicator" id="turbidityStatus"></div>
+                </div>
+
+                <div class="card" data-tooltip="Ideal TDS: 50-250 ppm">
+                    <label class="label" for="tdsMeter">Total Dissolved Solids</label>
+                    <div class="progress-bar"><div class="progress-fill tds-fill" id="tdsMeter"></div></div>
+                    <div id="tdsValue">TDS: 150 ppm</div>
+                    <div class="status-indicator" id="tdsStatus"></div>
+                </div>
+
+                <div class="card" data-tooltip="Ideal conductivity: 100-2000 µS/cm">
+                    <label class="label" for="conductivityMeter">Conductivity</label>
+                    <div class="progress-bar"><div class="progress-fill conductivity-fill" id="conductivityMeter"></div></div>
+                    <div id="conductivityValue">Conductivity: 500 µS/cm</div>
+                    <div class="status-indicator" id="conductivityStatus"></div>
+                </div>
+
+                <div class="card" data-tooltip="Ideal DO: 6.5-8 mg/L">
+                    <label class="label" for="doMeter">Dissolved Oxygen</label>
+                    <div class="progress-bar"><div class="progress-fill do-fill" id="doMeter"></div></div>
+                    <div id="doValue">DO: 7.2 mg/L</div>
+                    <div class="status-indicator" id="doStatus"></div>
+                </div>
+
+                <div class="card report">
+                    <h3>Water Quality Report</h3>
+                    <div class="report-content">
+                        <p id="reportText">Loading...</p>
+                        <div class="overall-status">
+                            <div class="status-circle" id="overallStatus"></div>
+                            <span>Overall Status</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="history" class="history">
+            <h2>Water Quality History</h2>
+            <div class="history-container">
+            <table class="history-table">
+                <thead>
+                <tr>
+                    <th>Date & Time</th>
+                    <th>pH Level</th>
+                    <th>Turbidity (NTU)</th>
+                    <th>TDS (ppm)</th>
+                    <th>Conductivity (µS/cm)</th>
+                    <th>DO (mg/L)</th>
+                    <th>Status</th>
+                </tr>
+                </thead>
+                <tbody id="historyData">
+                <!-- Data will be populated via JavaScript -->
+                <tr>
+                    <td>2025-01-01 09:00</td>
+                    <td>7.2</td>
+                    <td>2.5</td>
+                    <td>150</td>
+                    <td>500</td>
+                    <td>7.0</td>
+                    <td><span class="status-badge optimal">Optimal</span></td>
+                </tr>
+                <tr>
+                    <td>2025-01-01 08:00</td>
+                    <td>7.1</td>
+                    <td>2.8</td>
+                    <td>155</td>
+                    <td>510</td>
+                    <td>6.8</td>
+                    <td><span class="status-badge good">Good</span></td>
+                </tr>
+                </tbody>
+            </table>
+            </div>
+        </section>
+
+        <section id="info" class="info">
+            <h2>Understanding Water Quality Monitoring</h2>
+            <div class="info-grid">
+            <div class="info-card" data-aos="fade-up">
+                <i class="fas fa-fish fa-2x"></i>
+                <h3>Ecosystem Health</h3>
+                <p>Ensures the survival of aquatic life and maintains ecological balance in water bodies.</p>
+                <ul class="benefits-list">
+                    <li>Protects biodiversity</li>
+                    <li>Maintains natural habitats</li>
+                    <li>Prevents algal blooms</li>
+                </ul>
+            </div>
+            <div class="info-card" data-aos="fade-up" data-aos-delay="100">
+                <i class="fas fa-tint fa-2x"></i>
+                <h3>Public Health</h3>
+                <p>Safeguards community health through clean water monitoring and management.</p>
+                <ul class="benefits-list">
+                <li>Safe drinking water</li>
+                <li>Recreational safety</li>
+                <li>Disease prevention</li>
+                </ul>
+            </div>
+            <div class="info-card" data-aos="fade-up" data-aos-delay="200">
+                <i class="fas fa-industry fa-2x"></i>
+                <h3>Industrial Applications</h3>
+                <p>Ensures water quality meets industrial process requirements and standards.</p>
+                <ul class="benefits-list">
+                <li>Process efficiency</li>
+                <li>Equipment protection</li>
+                <li>Regulatory compliance</li>
+                </ul>
+            </div>
+            <div class="info-card" data-aos="fade-up" data-aos-delay="300">
+                <i class="fas fa-seedling fa-2x"></i>
+                <h3>Agricultural Impact</h3>
+                <p>Monitors water quality for optimal agricultural productivity and safety.</p>
+                <ul class="benefits-list">
+                <li>Crop irrigation</li>
+                <li>Livestock health</li>
+                <li>Soil protection</li>
+                </ul>
+            </div>
+            <div class="info-card" data-aos="fade-up" data-aos-delay="400">
+                <i class="fas fa-chart-line fa-2x"></i>
+                <h3>Real-time Monitoring</h3>
+                <p>Provides immediate detection of water quality changes and potential risks.</p>
+                <ul class="benefits-list">
+                <li>Instant alerts</li>
+                <li>Trend analysis</li>
+                <li>Preventive action</li>
+                </ul>
+            </div>
+            </div>
+
+            <div class="parameters-table">
+            <h2>Water Quality Parameters Guide</h2>
+            <table>
+                <thead>
+                <tr>
+                    <th>Parameter</th>
+                    <th>Ideal Range</th>
+                    <th>Impact on Water Quality</th>
+                    <th>Monitoring Frequency</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>pH Level</td>
+                    <td>6.5 - 8.5</td>
+                    <td>Affects aquatic life, chemical reactions, and water treatment efficiency</td>
+                    <td>Continuous</td>
+                </tr>
+                <tr>
+                    <td>Turbidity</td>
+                    <td>< 5 NTU</td>
+                    <td>Indicates water clarity and potential contamination</td>
+                    <td>Daily</td>
+                </tr>
+                <tr>
+                    <td>TDS</td>
+                    <td>50 - 250 ppm</td>
+                    <td>Measures dissolved minerals and organic matter</td>
+                    <td>Weekly</td>
+                </tr>
+                <tr>
+                    <td>Conductivity</td>
+                    <td>100 - 2000 µS/cm</td>
+                    <td>Indicates ionic content and mineralization</td>
+                    <td>Daily</td>
+                </tr>
+                <tr>
+                    <td>Dissolved Oxygen</td>
+                    <td>6.5 - 8 mg/L</td>
+                    <td>Essential for aquatic life and biodegradation</td>
+                    <td>Continuous</td>
+                </tr>
+                </tbody>
+            </table>
+            </div>
+        </section>
+    </main>
+    
     <footer>
-        <p>&copy; 2025 Water Monitoring | <a href="#">Privacy Policy</a></p>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Contact</h4>
+                <p><i class="fas fa-envelope"></i> contact@waterqual.com</p>
+            </div>
+            <div class="footer-section">
+                <h4>Links</h4>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 WaterQual Monitoring System</p>
+        </div>
     </footer>
+
     <script src="script.js"></script>
 </body>
 </html>
