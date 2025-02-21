@@ -70,5 +70,5 @@ License
 This project is licensed under the MIT License - see the LICENSE file for details.
 
 Contact
-For any queries or collaborations, feel free to reach out to Aditya S. Tawde at adityatawde9699@gmail.com].
+For any queries or collaborations, feel free to reach out to Aditya S. Tawde at adityatawde9699@gmail.com.
 
