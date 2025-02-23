@@ -14,7 +14,7 @@ if (!Array.prototype.forEach) {
 }
 
 // Configuration
-const esp32IP = "https://cb1b-2409-4081-390-3d6f-7d2b-7cab-6f6d-3db9.ngrok-free.app";
+const esp32IP = "192.168.45.1";
 const UPDATE_INTERVAL = 5000;
 const MAX_HISTORY_POINTS = 100;
 
@@ -187,66 +187,75 @@ function checkConnection() {
     }
     return true;
 }
-
 async function updateData(retryCount = 3) {
     try {
+        showLoadingState();
+        console.log("Attempting to connect to ESP32...");
+        
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), 5000);
-        
-        const response = await fetch(`${esp32IP}/data`, {
-            signal: controller.signal
+
+        // Add http:// protocol and log the full URL
+        const url = `http://${esp32IP}/data`;
+        console.log("Fetching from:", url);
+
+        const response = await fetch(url, {
+            mode: 'cors',
+            method: 'GET',
+            signal: controller.signal,
+            headers: {
+                'Accept': 'application/json'
+            }
         });
+
         clearTimeout(timeoutId);
         
-        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-        
-        try {
-            const data = await response.json();
-        } catch (parseError) {
-            console.error("Error parsing JSON:", parseError);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log("Received data:", data);
+
+        if (!validateData(data)) {
             throw new Error("Invalid data format received");
         }
 
-        if (!data || Object.keys(data).length === 0) throw new Error("Empty response received");
+        // Update UI with new data
+        dataHistory.push({
+            timestamp: getTimestamp(),
+            ...data
+        });
 
-        // Update only if data has changed
-        if (JSON.stringify(data) !== JSON.stringify(dataHistory[dataHistory.length - 1])) {
-            dataHistory.push({
-                timestamp: getTimestamp(),
-                ...data
-            });
-
-            if (dataHistory.length > MAX_HISTORY_POINTS) {
-                dataHistory.shift();
-            }
-
-            updateTimestamp();
-            Object.entries(data).forEach(([param, value]) => {
-                const history = dataHistory.map(entry => entry[param]);
-                updateParameter(value, param, history);
-            });
-
-            updateReport(data);
-            updateHistoryTable();
+        if (dataHistory.length > MAX_HISTORY_POINTS) {
+            dataHistory.shift();
         }
+
+        updateTimestamp();
+        Object.entries(data).forEach(([param, value]) => {
+            const history = dataHistory.map(entry => entry[param]);
+            updateParameter(value, param, history);
+        });
+
+        updateReport(data);
+        updateHistoryTable();
 
         document.getElementById("connectionStatus").innerText = "Connected ✅";
         document.getElementById("connectionStatus").style.color = "green";
-        
+        hideLoadingState();
+
     } catch (error) {
-        if (error.name === 'AbortError') {
-            console.log('Request timed out');
-        }
-        console.error("Error fetching data:", error);
-        document.getElementById("connectionStatus").innerText = "Disconnected ❌";
+        console.error("Connection error:", error.message);
+        document.getElementById("connectionStatus").innerText = `Disconnected ❌ (${error.message})`;
         document.getElementById("connectionStatus").style.color = "red";
+        hideLoadingState();
 
         if (retryCount > 0) {
+            console.log(`Retrying... ${retryCount} attempts remaining`);
             setTimeout(() => updateData(retryCount - 1), 1000);
         }
     }
 }
-
 document.addEventListener('DOMContentLoaded', () => {
     // Initialize hamburger menu
     const hamburger = document.querySelector('.hamburger');
