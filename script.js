@@ -14,7 +14,7 @@ if (!Array.prototype.forEach) {
 }
 
 // Configuration
-const esp32IP = "https://1bf1-2409-4081-178c-a2be-1cf6-e93e-421b-a41f.ngrok-free.app";
+const esp32IP = "https://cb1b-2409-4081-390-3d6f-7d2b-7cab-6f6d-3db9.ngrok-free.app";
 const UPDATE_INTERVAL = 5000;
 const MAX_HISTORY_POINTS = 100;
 
