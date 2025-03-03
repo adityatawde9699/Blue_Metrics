@@ -331,3 +331,283 @@ function validateData(data) {
         !isNaN(data[param])
     );
 }
+
+
+// Landing Animation Script
+document.addEventListener('DOMContentLoaded', () => {
+    // Create splash overlay
+    const splash = document.createElement('div');
+    splash.className = 'splash-overlay';
+    
+    // Add splash content
+    splash.innerHTML = `
+        <div class="splash-logo">
+            <i class="fas fa-water"></i>
+            <span>BlueMetrics</span>
+        </div>
+        <div class="splash-text">Real-time Water Quality Monitoring</div>
+        <div class="loading-bar">
+            <div class="loading-progress"></div>
+        </div>
+    `;
+    
+    document.body.appendChild(splash);
+    
+    // Add water ripple effect
+    const ripple = document.createElement('div');
+    ripple.className = 'water-ripple';
+    document.body.appendChild(ripple);
+    
+    // Initial state of the body
+    document.body.classList.add('loading');
+    
+    // Animate the loading bar
+    const loadingProgress = document.querySelector('.loading-progress');
+    let progress = 0;
+    
+    const animateLoading = () => {
+        if (progress < 100) {
+            progress += Math.random() * 15;
+            progress = Math.min(progress, 100);
+            loadingProgress.style.width = `${progress}%`;
+            
+            if (progress < 100) {
+                setTimeout(animateLoading, 200 + Math.random() * 300);
+            } else {
+                // When loading completes
+                setTimeout(() => {
+                    splash.classList.add('fade-out');
+                    document.body.classList.remove('loading');
+                    document.body.classList.add('animate-in');
+                    
+                    // Set initial width of progress bars to 0, then animate them
+                    setTimeout(() => {
+                        // Get the current width values from CSS variables or default values
+                        animateProgressBars();
+                    }, 100);
+                }, 500);
+            }
+        }
+    };
+    
+    // Start the animation sequence
+    setTimeout(animateLoading, 500);
+    
+    // Function to animate progress bars to their proper values
+    function animateProgressBars() {
+        // Get dynamic data or use defaults
+        const phValue = 7.0; // Could be from data
+        const turbidityValue = 2.5;
+        const tdsValue = 150;
+        const conductivityValue = 500;
+        const doValue = 7.2;
+        
+        // Calculate percentages based on thresholds
+        const phPercentage = ((phValue - 6.5) / (8.5 - 6.5)) * 100;
+        const turbidityPercentage = (turbidityValue / 5) * 100;
+        const tdsPercentage = ((tdsValue - 50) / (250 - 50)) * 100;
+        const conductivityPercentage = ((conductivityValue - 100) / (2000 - 100)) * 100;
+        const doPercentage = ((doValue - 6.5) / (8 - 6.5)) * 100;
+        
+        // Set the width for each progress bar
+        document.querySelector('.ph-fill').style.width = `${phPercentage}%`;
+        document.querySelector('.turbidity-fill').style.width = `${turbidityPercentage}%`;
+        document.querySelector('.tds-fill').style.width = `${tdsPercentage}%`;
+        document.querySelector('.conductivity-fill').style.width = `${conductivityPercentage}%`;
+        document.querySelector('.do-fill').style.width = `${doPercentage}%`;
+    }
+    
+    // Handle history section animations
+    const observerOptions = {
+        threshold: 0.2,
+        rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('fade-in-section');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+    
+    // Add animation classes for scrolling sections
+    document.querySelectorAll('.history, .info').forEach(section => {
+        section.classList.add('scroll-animate');
+        observer.observe(section);
+    });
+});
+// Enhanced animation for BlueMetrics dashboard
+document.addEventListener('DOMContentLoaded', () => {
+    // Add the CSS styles for animations
+    const style = document.createElement('style');
+    style.textContent = `
+        /* Basic scroll animations */
+        .scroll-animate {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .fade-in-section {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        body.loading {
+            overflow: hidden;
+        }
+        
+        /* Dashboard title animation */
+        .animate-in h1 {
+            opacity: 0;
+            transform: translateY(-20px);
+            animation: slideUp 1s ease 1s forwards;
+        }
+        
+        .animate-in .last-updated {
+            opacity: 0;
+            animation: fadeIn 1s ease 1.8s forwards;
+        }
+        
+        /* Card animations */
+        .animate-in .card {
+            opacity: 0;
+            animation: cardAppear 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        }
+        
+        .animate-in .container .card:nth-child(1) { animation-delay: 1.4s; }
+        .animate-in .container .card:nth-child(2) { animation-delay: 1.6s; }
+        .animate-in .container .card:nth-child(3) { animation-delay: 1.8s; }
+        .animate-in .container .card:nth-child(4) { animation-delay: 2.0s; }
+        .animate-in .container .card:nth-child(5) { animation-delay: 2.2s; }
+        .animate-in .container .card:nth-child(6) { animation-delay: 2.4s; }
+        
+        /* Progress bars special animation */
+        .animate-in .progress-fill {
+            width: 0 !important;
+            transition: width 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        
+        .animate-in .ph-fill { 
+            background: linear-gradient(90deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff);
+            background-size: 500% 500%;
+            animation: gradientFlow 3s ease-in-out infinite;
+            transition-delay: 1.7s;
+        }
+        
+        .animate-in .turbidity-fill { transition-delay: 1.9s; }
+        .animate-in .tds-fill { transition-delay: 2.1s; }
+        .animate-in .conductivity-fill { transition-delay: 2.3s; }
+        .animate-in .do-fill { transition-delay: 2.5s; }
+        
+        /* Keyframe animations */
+        @keyframes slideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+        
+        @keyframes cardAppear {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes gradientFlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+    `;
+    document.head.appendChild(style);
+    
+    // Apply scroll-animate class to elements we want to animate on scroll
+    const animateElements = [
+        ...document.querySelectorAll('.info-card'),
+        ...document.querySelectorAll('#history h2, #info h2'),
+        document.querySelector('.history-container'),
+        document.querySelector('.parameters-table')
+    ];
+    
+    // Add the scroll-animate class to each element
+    animateElements.forEach(element => {
+        if (element) {
+            element.classList.add('scroll-animate');
+        }
+    });
+    
+    // Add the initial animation class to the dashboard section
+    const dashboard = document.querySelector('#dashboard');
+    if (dashboard) {
+        dashboard.classList.add('animate-in');
+    }
+    
+    // Function to check if element is in viewport
+    const isInViewport = (element) => {
+        const rect = element.getBoundingClientRect();
+        return (
+            rect.top <= (window.innerHeight || document.documentElement.clientHeight) * 0.8 &&
+            rect.bottom >= 0
+        );
+    };
+    
+    // Function to handle scroll animation
+    const handleScrollAnimation = () => {
+        const animElements = document.querySelectorAll('.scroll-animate');
+        animElements.forEach(element => {
+            if (isInViewport(element)) {
+                element.classList.add('fade-in-section');
+            }
+        });
+    };
+    
+    // Add initial page loading animation
+    document.body.classList.add('loading');
+    
+    // Initialize progress bar widths after animations
+    const initializeProgressBars = () => {
+        // Wait for the entrance animations to complete
+        setTimeout(() => {
+            const progressFills = document.querySelectorAll('.progress-fill');
+            progressFills.forEach(fill => {
+                // Remove the !important from inline style by setting it via JavaScript
+                fill.style.width = fill.getAttribute('data-fill-width') || '50%';
+            });
+        }, 2600); // Time after the last progress bar delay
+    };
+    
+    // Store current widths before applying animations
+    const progressFills = document.querySelectorAll('.progress-fill');
+    progressFills.forEach(fill => {
+        // Store the original width to use after animation
+        const computedStyle = window.getComputedStyle(fill);
+        const currentWidth = computedStyle.width;
+        fill.setAttribute('data-fill-width', currentWidth);
+    });
+    
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            document.body.classList.remove('loading');
+            handleScrollAnimation();
+            initializeProgressBars();
+        }, 300);
+    });
+    
+    // Listen for scroll events
+    window.addEventListener('scroll', handleScrollAnimation);
+    
+    // Initial check for elements in viewport
+    handleScrollAnimation();
+});
