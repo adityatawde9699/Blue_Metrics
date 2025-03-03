@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlueMetrics - User Profile</title>
+    <meta name="description" content="Manage your WaterQual profile and monitoring preferences">
+    <link rel="icon" type="image/png" href="images/logo.png">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700|Roboto:400,500,700|Montserrat:400,500,600,700">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="profile.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <i class="fas fa-water"></i>
+            <span>BlueMetrics</span>
+        </div>
+        <div class="hamburger">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html" class="nav-link"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+            <li><a href="#history" class="nav-link"><i class="fas fa-chart-line"></i> History</a></li>
+            <li><a href="profile.html" class="nav-link active"><i class="fas fa-user"></i> Profile</a></li>
+            <li><a href="auth.html" class="nav-link"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section class="profile-section">
+            <h1>User Profile</h1>
+            <div class="profile-container">
+                <!-- Profile Info Card -->
+                <div class="profile-card">
+                    <h2>Personal Information</h2>
+                    <div class="profile-info">
+                        <div class="info-item">
+                            <label>Username:</label>
+                            <span id="username">johndoe</span>
+                        </div>
+                        <div class="info-item">
+                            <label>Email:</label>
+                            <span id="email">john.doe@example.com</span>
+                        </div>
+                        <div class="info-item">
+                            <label>Account Created:</label>
+                            <span id="createdDate">2025-01-01</span>
+                        </div>
+                    </div>
+                    <button class="edit-button" onclick="toggleEditMode(true)">Edit Profile</button>
+                </div>
+
+                <!-- Edit Form (Hidden by Default) -->
+                <form id="editProfileForm" class="profile-form">
+                    <h2>Edit Profile</h2>
+                    <div class="input-group">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="editUsername" placeholder="Username" required>
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" id="editEmail" placeholder="Email" required>
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="editPassword" placeholder="New Password (optional)">
+                    </div>
+                    <div class="button-group">
+                        <button type="submit" class="save-button">Save Changes</button>
+                        <button type="button" class="cancel-button" onclick="toggleEditMode(false)">Cancel</button>
+                    </div>
+                </form>
+
+                <!-- Preferences Card -->
+                <div class="profile-card">
+                    <h2>Monitoring Preferences</h2>
+                    <div class="preferences">
+                        <div class="pref-item">
+                            <label>Update Interval:</label>
+                            <div class="pref-item">
+                                <select id="updateInterval" title="Update Interval">
+                                    <option value="5000">5 seconds</option>
+                                    <option value="10000">10 seconds</option>
+                                    <option value="30000">30 seconds</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="pref-item">
+                            <p>Notification Thresholds:</p>
+                            <input type="checkbox" id="notifyCritical" checked>
+                            <label for="notifyCritical">Notify on Critical</label>
+                            <input type="checkbox" id="notifyWarning">
+                            <label for="notifyWarning">Notify on Warning</label>
+                        </div>
+                    </div>
+                    <button class="save-button" onclick="savePreferences()">Save Preferences</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 WaterQual Monitoring System</p>
+        </div>
+    </footer>
+
+    <script src="profile.js"></script>
+</body>
+</html>

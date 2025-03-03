@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlueMetrics - Login / Sign Up</title>
+    <meta name="description" content="Login or Sign Up to access your Water Quality Monitoring Dashboard">
+    <link rel="icon" type="image/png" href="images/logo.png">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700|Roboto:400,500,700">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="auth.css">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="logo">
+                <i class="fas fa-water"></i>
+                <span>BlueMetrics</span>
+            </div>
+            
+            <!-- Tab Navigation -->
+            <div class="tab-nav">
+                <button class="tab-button active" data-tab="login">Login</button>
+                <button class="tab-button" data-tab="signup">Sign Up</button>
+            </div>
+
+            <!-- Login Form -->
+            <form id="loginForm" class="auth-form active">
+                <h2>Login</h2>
+                <div class="input-group">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" id="loginEmail" placeholder="Email" required>
+                    <span class="error-message" id="loginEmailError"></span>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="loginPassword" placeholder="Password" required>
+                    <i class="fas fa-eye toggle-password"></i>
+                    <span class="error-message" id="loginPasswordError"></span>
+                </div>
+                <div class="form-options">
+                    <label>
+                        <input type="checkbox" id="rememberMe"> Remember Me
+                    </label>
+                    <a href="#" class="forgot-password" id="forgotPasswordLink">Forgot Password?</a>
+                </div>
+                <button type="submit" class="auth-button">
+                    <span class="button-text">Login</span>
+                    <span class="spinner hidden"></span>
+                </button>
+                <div class="social-login">
+                    <p>Or login with</p>
+                    <div class="social-buttons">
+                        <button type="button" class="social-btn google" aria-label="Sign in with Google">
+                            <i class="fab fa-google"></i>
+                        </button>
+                        <button type="button" class="social-btn facebook" aria-label="Sign in with Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </button>
+                        <button type="button" class="social-btn apple" aria-label="Sign in with Apple">
+                            <i class="fab fa-apple"></i>
+                        </button>
+                    </div>
+                </div>
+                <p class="form-footer">Don't have an account? <a href="#" class="tab-link" data-tab="signup">Sign Up</a></p>
+            </form>
+
+            <!-- Signup Form -->
+            <form id="signupForm" class="auth-form">
+                <h2>Sign Up</h2>
+                <div class="input-group">
+                    <i class="fas fa-user"></i>
+                    <input type="text" id="signupUsername" placeholder="Username" required>
+                    <span class="error-message" id="usernameError"></span>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" id="signupEmail" placeholder="Email" required>
+                    <span class="error-message" id="emailError"></span>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="signupPassword" placeholder="Password" required>
+                    <i class="fas fa-eye toggle-password"></i>
+                    <span class="error-message" id="passwordError"></span>
+                    <div class="password-strength">
+                        <div class="strength-meter">
+                            <div class="strength-meter-fill"></div>
+                        </div>
+                        <div class="strength-text"></div>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+                    <i class="fas fa-eye toggle-password"></i>
+                    <span class="error-message" id="confirmPasswordError"></span>
+                </div>
+                <div class="terms-checkbox">
+                    <label>
+                        <input type="checkbox" id="termsCheck" required>
+                        I agree to the <a href="#" id="termsLink">Terms of Service</a> and <a href="#" id="privacyLink">Privacy Policy</a>
+                    </label>
+                    <span class="error-message" id="termsError"></span>
+                </div>
+                <button type="submit" class="auth-button">
+                    <span class="button-text">Sign Up</span>
+                    <span class="spinner hidden"></span>
+                </button>
+                <p class="form-footer">Already have an account? <a href="#" class="tab-link" data-tab="login">Login</a></p>
+            </form>
+
+            <!-- Forgot Password Form -->
+            <form id="forgotPasswordForm" class="auth-form">
+                <h2>Reset Password</h2>
+                <p class="form-description">Enter your email address below and we'll send you instructions to reset your password.</p>
+                <div class="input-group">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" id="resetEmail" placeholder="Email" required>
+                    <span class="error-message" id="resetEmailError"></span>
+                </div>
+                <button type="submit" class="auth-button">
+                    <span class="button-text">Send Reset Link</span>
+                    <span class="spinner hidden"></span>
+                </button>
+                <p class="form-footer">Remember your password? <a href="#" class="tab-link" data-tab="login">Back to Login</a></p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal for Terms and Privacy Policy -->
+    <div class="modal" id="termsModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2 id="modalTitle">Terms of Service</h2>
+            <div class="modal-body" id="modalBody">
+                <!-- Content will be loaded dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast-container">
+        <div class="toast" id="toast">
+            <div class="toast-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <div class="toast-message">Success message here</div>
+            <div class="toast-close">&times;</div>
+        </div>
+    </div>
+
+    <script src="auth.js"></script>
+</body>
+</html>
