@@ -1,0 +1,320 @@
+/* Mobile-Only Styles */
+@media only screen and (max-width: 767px) {
+    /* General Styles */
+    body {
+        padding: 10px;
+    }
+
+    h1 {
+        font-size: 24px;
+        margin-bottom: 15px;
+        letter-spacing: 1px;
+    }
+
+    /* Splash Screen Adjustments */
+    .splash-logo {
+        font-size: 48px;
+        gap: 10px;
+    }
+
+    .splash-text {
+        font-size: 18px;
+        margin-bottom: 20px;
+        padding: 0 15px;
+        text-align: center;
+    }
+
+    .loading-bar {
+        width: 150px;
+    }
+
+    /* Navigation Adjustments */
+    .navbar {
+        padding: 12px 15px;
+    }
+
+    .logo {
+        font-size: 20px;
+        letter-spacing: 1.5px;
+        padding: 3px 10px;
+    }
+
+    /* Main Content Adjustments */
+    main {
+        margin-top: 60px;
+    }
+
+    .container {
+        width: 100%;
+        margin-top: 30px;
+        gap: 15px;
+    }
+
+    /* Dashboard Adjustments */
+    .dashboard {
+        padding: 15px 10px;
+        border-radius: 15px;
+        margin: 10px auto;
+    }
+
+    .dashboard:hover {
+        transform: none;
+    }
+
+    .last-updated {
+        font-size: 12px;
+        margin-bottom: 15px;
+        padding: 5px 10px;
+    }
+
+    /* Card Adjustments */
+    .card {
+        padding: 15px;
+        border-radius: 15px;
+    }
+
+    .card:hover {
+        transform: none;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .label {
+        font-size: 16px;
+        margin: 0 0 10px 0;
+    }
+
+    .progress-bar {
+        height: 12px;
+        margin: 10px 0;
+    }
+
+    [id$="Value"] {
+        font-size: 14px;
+    }
+
+    /* History Section Adjustments */
+    .history {
+        padding: 15px;
+        border-radius: 15px;
+        margin: 30px auto;
+        width: 100%;
+    }
+
+    .history:hover {
+        transform: none;
+    }
+
+    .history h2 {
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+
+    .history h2::after {
+        bottom: -8px;
+        height: 2px;
+    }
+
+    .history-container {
+        border-radius: 10px;
+        padding: 10px;
+    }
+
+    /* Table Optimizations for Mobile */
+    .history-table {
+        min-width: 600px; /* Force horizontal scrolling */
+    }
+
+    .history-table th,
+    .history-table td {
+        padding: 10px;
+        font-size: 12px;
+    }
+
+    .history-table th {
+        font-size: 12px;
+        letter-spacing: 0.5px;
+    }
+
+    .status-badge {
+        padding: 4px 8px;
+        font-size: 11px;
+        letter-spacing: 0.3px;
+    }
+
+    /* Info Section Adjustments */
+    .info {
+        padding: 20px 15px;
+        border-radius: 15px;
+        margin: 20px 0;
+        width: 100%;
+    }
+
+    .info h2 {
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+
+    .info-grid {
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+
+    .info-card {
+        padding: 15px;
+        border-radius: 10px;
+    }
+
+    .info-card:hover {
+        transform: none;
+    }
+
+    .info-card h3 {
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
+
+    .info-card p {
+        font-size: 14px;
+        line-height: 1.5;
+        margin-bottom: 10px;
+    }
+
+    .benefits-list li {
+        padding: 6px 0;
+        font-size: 14px;
+        padding-left: 15px;
+    }
+
+    /* Parameter Table Adjustments */
+    .parameters-table {
+        margin-top: 20px;
+    }
+
+    th, td {
+        padding: 10px;
+        font-size: 12px;
+    }
+
+    /* Footer Adjustments */
+    footer {
+        margin-top: 30px;
+        padding: 10px;
+        font-size: 12px;
+        width: 100%;
+        border-radius: 8px;
+    }
+
+    /* Disable Animations on Mobile for Performance */
+    .animate-in .card,
+    .animate-in h1,
+    .animate-in .progress-fill,
+    .animate-in .logo,
+    .animate-in .nav-links li,
+    .animate-in .last-updated {
+        animation: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+    }
+
+    /* Optimize the progress-fill for immediate display */
+    .animate-in .progress-fill {
+        transition: none !important;
+    }
+
+    /* Optimize Fixed Touch Targets for Mobile */
+    .nav-link,
+    .hamburger,
+    .dropdown,
+    button {
+        min-height: 44px;
+        min-width: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Fix Layout Shifts */
+    .dropdown-content {
+        width: 100%;
+        left: 0;
+        right: auto;
+    }
+
+    /* Fix for Mobile Safari Momentum Scrolling */
+    .history-container {
+        -webkit-overflow-scrolling: touch;
+    }
+}
+
+/* Additional Small Phone Adjustments */
+@media only screen and (max-width: 375px) {
+    h1 {
+        font-size: 22px;
+    }
+
+    .card {
+        padding: 12px;
+    }
+
+    .label {
+        font-size: 15px;
+    }
+
+    .info-card h3 {
+        font-size: 16px;
+    }
+
+    .navbar {
+        padding: 10px;
+    }
+
+    .logo {
+        font-size: 18px;
+    }
+}
+
+/* Landscape Mode Optimizations */
+@media only screen and (max-width: 767px) and (orientation: landscape) {
+    .navbar {
+        padding: 8px 15px;
+    }
+
+    main {
+        margin-top: 50px;
+    }
+
+    .nav-links {
+        top: 50px;
+        height: calc(100vh - 50px);
+    }
+
+    /* Optimize for landscape viewing */
+    .container {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+
+    /* Smaller splash for landscape */
+    .splash-logo {
+        font-size: 40px;
+    }
+}
+
+/* Medium-sized devices (tablets) */
+@media only screen and (min-width: 768px) and (max-width: 1023px) {
+    .container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    h1 {
+        font-size: 28px;
+    }
+
+    .card {
+        padding: 20px;
+    }
+
+    /* Reduce extreme animations on tablet */
+    .animate-in .card:hover {
+        transform: translateY(-5px);
+    }
+}
